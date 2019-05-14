@@ -43,19 +43,30 @@ namespace DiagramsParse
 
         public string[] GetPoints(List<string> workSections)
         {
-            List<int> GraphPoints = new List<int>();
-
             string[] points = new string[9];
             int time = 8;
 
-            for (int i = 0; i < points.Length;i++)
+            for (int i = 0; i < points.Length; i++)
             {
                 points[i] = $"{time}.00-{time + 1}.00,calls:";
             }
 
             time = 8;
 
-            
+            for (int i = 0; i < workSections.Count; i++)
+            {
+                if (regexOpen.IsMatch(workSections[i]))
+                {
+                    for (int j = i; j < workSections.Count; j++)
+                    {
+                        if (regexClose.IsMatch(workSections[j]))
+                        {
+
+                        }
+                    }
+                }
+                else { }
+            }
 
             return points;
         } // 
@@ -79,7 +90,7 @@ namespace DiagramsParse
             return currentTime;
         }//Вырезка времени из лога
 
-        public string[] GetNumberCalls(string[] timeCall,List<string> workSections) // Получаем количество вызовов
+        public string[] GetNumberCalls(string[] timeCall, List<string> workSections) // Получаем количество вызовов
         {
             string[] calls = new string[9];
 
@@ -103,17 +114,17 @@ namespace DiagramsParse
             return calls;
         }
 
-        public string[] GetTimeCall(string[] numberCall,List<string> workSections)
+        public string[] GetTimeCall(string[] numberCall, List<string> workSections)
         {
             string[] calls = new string[9];
 
             for (int i = 0; i < calls.Length; i++)
             {
-                calls[i] = "";       
+                calls[i] = "";
             }
 
             return calls;
         } // Время вызовов
-        
+
     }
 }
