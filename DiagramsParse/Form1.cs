@@ -24,12 +24,33 @@ namespace DiagramsParse
         private void button1_Click(object sender, EventArgs e)
         {
             
-            int cnt = 1;
+            int cnt = 0;
+            int[][] a;
             List<DateTime> dt = new List<DateTime>();
             
             txt = LogParser.ReadLog("D:/2019-04-16.log");
             txt = LogParser.FindWorkSections(txt);
-            //LogParser.GetCalls(txt);
+            a = LogParser.GetPoints(txt);
+
+            richTextBox1.AppendText("OPENS" + "\n");
+
+            foreach (var item in a[0])
+            {
+                richTextBox1.AppendText(cnt+$".Значение open: {item}" + "\n");
+                cnt++;
+            }
+
+            cnt = 0;
+            richTextBox1.AppendText("CLOSES" + "\n");
+
+            foreach (var item in a[1])
+            {
+                richTextBox1.AppendText(cnt + $".Значение close: {item}" + "\n");
+                cnt++;
+            }
+
+            cnt = 0;
+
             foreach (var item in txt)
             {
                 richTextBox1.AppendText(cnt+$". {item}"+"\n");
@@ -49,7 +70,12 @@ namespace DiagramsParse
             //txt = LogParser.FindWorkSections(txt);           
             diagrams.MakeDiagram();
             diagrams.ShowDialog();           
+
         }
-        
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -25,11 +25,11 @@ namespace DiagramsParse
         public void MakeDiagram()
         {
             int time = 8;
+
             for (int i = 0; i < 10; i++)
             {
-                
-                    chart1.Series[0].Points.AddXY($"{time}.00-{time+1}.00", 1);
-                
+                chart1.Series[0].Points.AddXY($"{time}.00-{time+1}.00", 1+i);
+                chart2.Series[0].Points.AddXY($"{time}.00-{time + 1}.00", 1 + i);
                 time++;
             }
         }

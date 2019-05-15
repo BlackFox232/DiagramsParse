@@ -41,34 +41,55 @@ namespace DiagramsParse
             return workSections;
         }//вырезка Open/Close из всего лога  
 
-        public string[] GetPoints(List<string> workSections)
-        {
-            string[] points = new string[9];
-            int time = 8;
+        public int[][] GetPoints(List<string> workSections)
+        {           
+            int time ;
+            int[][] interval = new int[2][];
+            //int[] intervalCloses = new int[11];
+            interval[0] = new int[11];
+            interval[1] = new int[11];
 
-            for (int i = 0; i < points.Length; i++)
+            int currentInterval = 0;
+
+            foreach (var item in workSections)
             {
-                points[i] = $"{time}.00-{time + 1}.00,calls:";
-            }
+                Regex timeInterval;
+                time = 8;
 
-            time = 8;
-
-            for (int i = 0; i < workSections.Count; i++)
-            {
-                if (regexOpen.IsMatch(workSections[i]))
+                for (int i = 0; i < 11; i++)
                 {
-                    for (int j = i; j < workSections.Count; j++)
+                    if (time == 8 || time == 9)
                     {
-                        if (regexClose.IsMatch(workSections[j]))
-                        {
+                        timeInterval = new Regex($"0{time}:"+"[0-9]{2}:"+"[0-9]{2}");
+                    }
+                    else
+                    {
+                        timeInterval = new Regex($"{time}:" + "[0-9]{2}:" + "[0-9]{2}");
+                    }
 
+
+                    if (timeInterval.IsMatch(item))
+                    {
+                        
+                        //interval[i]++;
+
+                        if (regexOpen.IsMatch(item))
+                        {
+                            interval[0][i]++;
+                            currentInterval++;
+                        }
+                        else
+                        {
+                            interval[1][i]++;
+                            currentInterval++;
                         }
                     }
+                    
+                    time++;
                 }
-                else { }
             }
-
-            return points;
+            System.Windows.Forms.MessageBox.Show($"I FIND {currentInterval} ITEMS");
+            return interval;
         } // 
 
         public List<DateTime> ParseTime(List<string> workSections)
